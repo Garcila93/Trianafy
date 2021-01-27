@@ -18,12 +18,13 @@ const app = express();
 
 //Init y config de middlewares
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('dev'))
+app.use(morgan('dev'));
 morganBody(app);
 
 //Config rutas
+app.use('/users', routes.user);
 
 //Init server
 app.listen(process.env.PORT, () =>
@@ -31,3 +32,12 @@ app.listen(process.env.PORT, () =>
     `¡Aplicación de ejemplo escuchando en el puerto ${process.env.PORT}!`
   )
 );
+
+app.use((req,res,next) => {
+
+  req.context={
+    models, 
+    me:models.Users.userRepository.findById(1)
+  };
+  next();
+}); 
