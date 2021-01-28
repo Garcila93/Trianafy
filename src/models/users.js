@@ -27,6 +27,10 @@ const emailExists = (email) => {
     return emails.includes(email);
 }
 
+const usernameExists = (username) => {
+    let usernames = users.map(user => user.username);
+    return usernames.includes(username);
+}
 const userRepository ={
 
     findAll(){
@@ -55,6 +59,11 @@ const userRepository ={
             users[posicionEncontrado].username = modifiedUser.username;
         }
         return posicionEncontrado != -1 ? users[posicionEncontrado] : undefined;
+    },
+
+    findByUsername(username) {
+        let result = users.filter(user => user.username == username);
+        return Array.isArray(result) && result.length > 0 ? result[0] : undefined;   
     },
 
     update(modifiedUser) {

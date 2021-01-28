@@ -1,4 +1,4 @@
-import { Post, postRepository } from '../models/posts';
+import { song, songRepository } from '../models/posts';
 
 
 export const PostController = {

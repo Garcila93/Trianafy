@@ -1,4 +1,4 @@
-class Songs{
+class Song{
     constructor(id, title, artist, album, year){
         this.id=id;
         this.title=title;
@@ -8,6 +8,6 @@ class Songs{
     }
 }
 
-export{
-    Songs
+export {
+    Song
 }

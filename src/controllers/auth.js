@@ -3,8 +3,6 @@ import { User, userRepository } from '../models/users';
 import bcrypt from 'bcryptjs';
 import { JwtService } from '../services/jwt';
 
-
-
 const AuthController = {
 
     register: (req, res, next) => {

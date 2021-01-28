@@ -1,5 +1,5 @@
 import user from './user';
-import post from './post';
+import post from './song';
 
 
 export default {

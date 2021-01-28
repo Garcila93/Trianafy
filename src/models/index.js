@@ -1,11 +1,9 @@
-import Users from './users'
-import userRepository from './users'
+import * as Users from './users';
 import Playlists from './playlists'
-import Songs from './songs'
+import Song from './song'
 
 export default{
     Users,
-    userRepository,
     Playlists,
-    Songs
+    Song
 }
