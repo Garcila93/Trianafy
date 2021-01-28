@@ -26,6 +26,8 @@ const indexOfPorId = (id) => {
 
 const playlistRepository = {
 
+    // esto esta mal
+
     findAll : () => songs.map(song => {
         post.author = userRepository.findById(post.user_id).toDto()
         return post;
@@ -50,5 +52,6 @@ const playlistRepository = {
 }
 
 export{
-    Playlists
+    Playlists, 
+    playlistRepository
 }
