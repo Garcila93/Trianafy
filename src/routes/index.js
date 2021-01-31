@@ -1,8 +1,12 @@
 import user from './user';
-import post from './song';
+import song from './song';
+import playList from './playlist'
+import auth from './auth'
 
 
 export default {
     user,
-    post
+    song, 
+    playList,
+    auth
 }

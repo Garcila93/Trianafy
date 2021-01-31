@@ -5,6 +5,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import morganBody from "morgan-body";
+import mongoose from "mongoose"
 
 // Componentes del API
 import models from './models';
@@ -36,14 +37,15 @@ app.use(passport.initialize());
 app.use((req, res, next) => {
   // Para cualquier petición, añadimos en su contexto
   req.context = {
-    models
+    models,
   };
   next();
 });
 
 // Configuración de las rutas.
 app.use('/users', routes.user);
-app.use('/post', routes.post);
+app.use('/playlists',routes.playList)
+app.use('/songs', routes.song);
 app.use('/auth', routes.auth)
 
 // Inicialización del servidor
@@ -52,3 +54,18 @@ app.listen(process.env.PORT, () =>
     `¡Aplicación de ejemplo escuchando en el puerto ${process.env.PORT}!`
   )
 );
+
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
+  
+  if (err) {
+    console.log(`Error de conexión a la base de datos: ${JSON.stringify(err)}`);
+  } else {
+    console.log(`Conexión correcta a la base de datos en la URI ${process.env.DB_URI}`);
+    app.listen(process.env.PORT, () =>
+      console.log(
+        `¡Aplicación de ejemplo escuchando en el puerto ${process.env.PORT}!`
+      )
+    );
+  }
+
+});

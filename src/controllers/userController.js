@@ -5,42 +5,54 @@ import {validationResult} from 'express-validator';
 
 const UserController = {
 
-    todosLosUsuarios : (req, res) => {
-        res.json(req.context.models.users.userRepository.findAll());
-    },
-
-    usuarioPorId: (req, res) => {
-
-        let user = userRepository.findById(req.params.id);
-        if (user != undefined) {
-            res.json(user);
-        } else {
+    todosLosUsuarios: async (req, res) => {
+        const data = await userRepository.findAll();
+        if (Array.isArray(data) && data.length > 0) 
+            res.json(data);
+        else
             res.sendStatus(404);
-        }
-
-},
-    
-    me : (req, res) => {
-        res.json(req.context.me);
     },
 
-    nuevoUsuario : (req, res) => {
-        let usuarioCreado = userRepository.create(new User(undefined, req.body.username));
+    usuarioPorId: async (req, res) => {
+
+            let user = await userRepository.findById(req.params.id);
+            if (user != undefined) {
+                res.json(user);
+            } else {
+                res.sendStatus(404);
+            }
+
+    },
+
+    nuevoUsuario: async (req, res) => {
+        // let usuarioCreado = userRepository.create(new User(req.body.username, req.body.email));
+        // Ya no tenemos la clase user para usarla así, tenemos que crear un simple objeto
+        let usuarioCreado = await userRepository.create({
+            nombre: req.body.nombre,
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password
+        })
         res.status(201).json(usuarioCreado);
     },
 
-    editarUsuario: (req, res) => {
-        let usuarioModificado = userRepository.updateById(req.params.id, new User(undefined, req.body.username));
+    editarUsuario: async (req, res) => {
+        // let usuarioModificado = userRepository.updateById(req.params.id, new User(undefined, req.body.username));
+        // Ya no tenemos la clase user para usarla así, tenemos que crear un simple objeto
+        let usuarioModificado = await userRepository.updateById(req.params.id, {
+            username: req.body.username
+        });
         if (usuarioModificado == undefined)
             res.sendStatus(404);
-        else   
+        else
             res.status(200).json(usuarioModificado);
     },
 
-    eliminarUsuario: (req, res) => {
-        userRepository.delete(req.params.id);
+    eliminarUsuario: async (req, res) => {
+        await userRepository.delete(req.params.id);
         res.sendStatus(204);
     }
+
 
 };
 
